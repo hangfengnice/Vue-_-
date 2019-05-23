@@ -25,6 +25,7 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.6",
     "webpack": "^4.32.1",
     "webpack-cli": "^3.3.2",
