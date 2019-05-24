@@ -14,8 +14,12 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
 // Vue.http.options.root = 'http://vue.studyit.io'
+Vue.http.options.emulateJSON =true
 
+import VuePreview from 'vue-preview'
 
+// defalut install
+Vue.use(VuePreview)
 
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
@@ -24,6 +28,8 @@ Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem)
 Vue.use(MintUI)
 import { Button } from 'mint-ui';
+import { Lazyload } from 'mint-ui';
+Vue.use(Lazyload);
 
 Vue.component(Button.name, Button);
 

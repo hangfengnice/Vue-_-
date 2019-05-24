@@ -2,8 +2,8 @@
   <div>
     <h3 class="cmt-container">发表评论</h3>
     <hr>
-    <textarea name id cols="30" rows="10" placeholder="请输入想说的说"></textarea>
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <textarea name id cols="30" rows="10" placeholder="请输入想说的说" v-model='msg'></textarea>
+    <mt-button type="primary" size="large" @click='postComment'>发表评论</mt-button>
 
     <div class="cmt-list" v-for="(item,i) in comments" :key="item.time">
       <div class="cmt-item">
@@ -21,11 +21,14 @@
 
 
 <script>
+import {Toast} from 'mint-ui'
+
 export default {
   data() {
     return {
       page: "1",
-      comments: []
+      comments: [],
+      msg:""
     };
   },
   created() {
@@ -41,6 +44,22 @@ export default {
     },
     getMore() {
       this.page++, this.getComment();
+    },
+    postComment(){
+if(this.msg.trim().length === 0){
+  return Toast('内容不能为空')
+}
+      this.$http.post('../../../comment.json',{
+        content: this.msg.trim()
+      }).then(function(data){
+        var cmt = {
+          user :"达纳海",
+          time: Date.now(),
+          content: this.msg.trim()
+        }
+        this.comments.unshift(cmt)
+        this.msg=''
+      })
     }
   }
 };
