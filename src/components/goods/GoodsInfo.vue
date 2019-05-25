@@ -1,5 +1,8 @@
 <template>
   <div class="goodsinfo-container">
+    <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+      <div class="ball" v-show="ballflag" ref='ball'></div>
+    </transition>
     <!-- 轮播图 -->
     <div class="mui-card">
       <div class="mui-card-content">
@@ -19,13 +22,19 @@
             <del>¥2399</del>&nbsp;&nbsp;销售价：
             <span class="now_price">$2199</span>
           </p>
-          <p>
-            购买数量：
-            <numbox></numbox>
-          </p>
+          <div>
+购买数量：
+            <div data-v-3bdad149="" data-v-97a93baa="" data-numbox-min="1" data-numbox-max="9" class="mui-numbox">
+              <button data-v-3bdad149="" type="button" class="mui-btn mui-btn-numbox-minus" @click='delnumber'>-</button> 
+              <input data-v-3bdad149="" id="test" type="number" value="1" class="mui-input-numbox" v-model='value'> 
+              <button data-v-3bdad149="" type="button" class="mui-btn mui-btn-numbox-plus" @click='addnumber'>+</button>
+              </div>
+          </div>
+            
+          
           <P>
             <mt-button type="primary" size="small">立即购买</mt-button>
-            <mt-button type="danger" size="small">加入购物车</mt-button>
+            <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
           </P>
         </div>
       </div>
@@ -54,13 +63,39 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      lunbotu: []
+      lunbotu: [],
+      ballflag: false,
+      value: 1,
+      
     };
   },
   created() {
     this.getLunbotu();
   },
   methods: {
+    beforeEnter(el){
+      el.style.transform = 'translate(0,0)'
+
+    },
+    enter(el,done){
+
+const ballPosition = this.$refs.ball.getBoundingClientRect()
+const badgePosition = document.getElementById('badge').getBoundingClientRect()
+
+const xDist = badgePosition.left - ballPosition.left
+const yDist = badgePosition.top - ballPosition.top
+
+
+
+      el.offsetTop;
+      el.style.transform = `translate(${xDist}px,${yDist}px)`
+      el.style.transition = "all .7s cubic-bezier(.39,-0.29,1,.68)"
+      // cubic-bezier(.41,.01,.82,1.15)
+      done()
+    },
+    afterEnter(el){
+this.ballflag = !this.ballflag
+    },
     getLunbotu() {
       this.$http.get("../../../json/goodsurl.json").then(data => {
         this.lunbotu = data.body.message;
@@ -71,6 +106,16 @@ export default {
     },
     gocomment(id) {
       this.$router.push({ name: "goodscomment", params: { id } });
+    },
+    addToShopCar() {
+      this.ballflag = !this.ballflag;
+    },
+    delnumber(){
+      this.value --
+      if(this.value < 0)this.value =0;
+    },
+    addnumber(){
+      this.value++
     }
   },
   components: {
@@ -82,6 +127,18 @@ export default {
 
 <style lang="scss" scoped>
 .goodsinfo-container {
+  .ball {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    z-index: 99;
+    top: 511px;
+    left: 151px;
+      // transform : translate(137px,190px)
+
+  }
   background-color: #eee;
   .now_price {
     font-size: 16px;

@@ -1,11 +1,14 @@
 <template>
     <div>
-        <h3>shangping 图文皆骚</h3>
+        <cmtbox :id='$route.params.id'></cmtbox>
     </div>
 </template>
 <script>
+import cmtbox from '../subcomponents/comment.vue'
 export default {
-    
+   components: {
+       cmtbox
+   }
 
 }
 </script>
