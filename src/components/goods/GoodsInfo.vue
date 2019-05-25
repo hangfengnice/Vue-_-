@@ -63,6 +63,10 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      msg:{
+price: 200,
+
+      },
       lunbotu: [],
       ballflag: false,
       value: 1,
@@ -109,6 +113,14 @@ this.ballflag = !this.ballflag
     },
     addToShopCar() {
       this.ballflag = !this.ballflag;
+      var goodsinfo = {
+        id:this.id,
+        count:this.value,
+        selected: true
+
+
+      }
+      this.$store.commit('addToCar',goodsinfo)
     },
     delnumber(){
       this.value --
