@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <h1>Home</h1>
-    <button @click='gotoMenu' class="btn btn-success">Let's order! ^^</button>
+    <div class="row">
+      <div id="home" class="col-sm-12 text-center">
+        <div class="background">
+          <h1>欢迎各位的到来</h1>
+          <h2>这里有大家喜欢的pizza</h2>
+          <button @click='gotoMenu' class="btn btn-success">Let's order! ^^</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -22,3 +29,22 @@ export default {
   }
 }
 </script>
+<style  scoped>
+  #home{
+    background: url('../assets/yingying.jpeg') center no-repeat;
+    /* background-size: contain; */
+    height: 85vh;
+    padding: 10%;
+
+  }
+  h1,h2{
+    margin: 6%;
+
+  }
+  .background{
+    max-width: 70vw;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+</style>
