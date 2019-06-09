@@ -2,6 +2,16 @@
 
 ## 对Vue的一些个人总结,对每个文件的主要内容进行概括
 
+### admin 用户的增删改查
+
+- 需要的环境 axios vue-router json-server
+  - json-server 模拟后端数据
+  - axios全局配置 `Vue.prototype.axios = axios` 使用时 `this.axios`
+  - 取参数 `this.$route.params.id`
+  - 传参数 `this.$router.push({path:'/',query:{alert:'删除成功'}})`
+- 样式使用了[bootstrap](https://v3.bootcss.com/getting-started/)
+  - 使用里面的bootstrap的js时,需要依赖jQuery
+
 ### order 一个单页面的点餐系统
 
 - 路由的配置
