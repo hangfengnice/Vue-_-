@@ -47,7 +47,7 @@ export default {
     fetchCustomers(id) {
       this.axios.get("http://localhost:3000/users/" + id).then(res => {
         this.customer = res.data;
-        console.log(res)
+        // console.log(res)
       });
     },
     deleteCustomer(id){
