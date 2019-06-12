@@ -6,6 +6,12 @@
     <!-- <Ashow :content='inputValue'/> -->
     <p>appName: {{appName}}, appNameWithVersion : {{appNameWithVersion}}</p>
     <p>userName: {{userName}}, firstLetter : {{firstLetter}}</p>
+    <p><button @click='handleChangeAppName'>rename appName</button></p>
+    <p>{{appVersion}}</p>
+    <p><button @click='changeUserName'>修改用户名</button></p>
+    <p><button @click='registerModule'>动态注册模块</button></p>
+    <p v-for='(li, index) in todoList' :key='index'>{{li}}</p>
+
 
   </div>
 </template>
@@ -13,7 +19,7 @@
 <script>
 import Ainput from '_c/Ainput.vue'
 import Ashow from '_c/Ashow.vue'
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 export default {
   name: "store",
   data(){
@@ -38,8 +44,13 @@ export default {
     ]),
     ...mapState({
       appName: state => state.appName,
-      userName: state => state.user.userName
+      userName: state => state.user.userName,
+      appVersion: state => state.appVersion,
+      // todoList: state => state.todo ? state.todo.todoList : []
+      todoList: state => state.user.todo ? state.user.todo.todoList : []
+
     }),
+
 
     // appName(){
     //   return this.$store.state.appName
@@ -56,8 +67,47 @@ export default {
     // }
   },
   methods: {
+    ...mapMutations([
+      'SET_USER_NAME',
+      "SET_APP_NAME"
+    ]),
+    ...mapActions([
+      "updateAppName"
+    ]),
     handleInput(val){
       this.inputValue = val
+    },
+    handleChangeAppName(){
+      // this.$store.commit('SET_APP_NAME','newAppName')
+      // this.$store.commit({
+      //   type: "SET_APP_NAME",
+      //   name: "newAppName"
+      // })
+      this.updateAppName()
+      // this.SET_APP_NAME({name:'newAppName'})
+      this.$store.commit('SET_APP_VERSION')
+
+    },
+    changeUserName(){
+      this.SET_USER_NAME('vue-cource')
+    },
+    registerModule(){
+      // this.$store.registerModule('todo',{
+      //   state: {
+      //     todoList: [
+      //       '学习mutations',
+      //       '学习actions',
+      //     ]
+      //   }
+      // })
+      this.$store.registerModule(['user','todo'],{
+        state: {
+          todoList: [
+            '学习mutations',
+            '学习actions',
+          ]
+        }
+      })
     }
   },
 }
