@@ -1,8 +1,10 @@
 <template>
   <div>
     <!-- <Ainput v-model='inputValue'></Ainput> -->
-    <Ainput @input='handleInput'/>
-    <p>{{inputValue}} -> lastLetter is {{inpitValueLastLetter}}</p>
+    <!-- <Ainput :value='stateValue' @input='handleChangeStateValue'/> -->
+    <Ainput v-model='stateValue'/>
+
+    <p>{{stateValue}} -> lastLetter is {{inpitValueLastLetter}}</p>
     <!-- <Ashow :content='inputValue'/> -->
     <p>appName: {{appName}}, appNameWithVersion : {{appNameWithVersion}}</p>
     <p>userName: {{userName}}, firstLetter : {{firstLetter}}</p>
@@ -47,9 +49,19 @@ export default {
       userName: state => state.user.userName,
       appVersion: state => state.appVersion,
       // todoList: state => state.todo ? state.todo.todoList : []
-      todoList: state => state.user.todo ? state.user.todo.todoList : []
+      todoList: state => state.user.todo ? state.user.todo.todoList : [],
+      // stateValue: state => state.stateValue
 
     }),
+    stateValue: {
+      get(){
+        return this.$store.state.stateValue
+      },
+      set(value){
+      this.SET_STATE_VALUE(value)
+
+      }
+    },
 
 
     // appName(){
@@ -69,7 +81,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_USER_NAME',
-      "SET_APP_NAME"
+      "SET_APP_NAME",
+      "SET_STATE_VALUE"
     ]),
     ...mapActions([
       "updateAppName"
@@ -83,6 +96,7 @@ export default {
       //   type: "SET_APP_NAME",
       //   name: "newAppName"
       // })
+      // this.$store.state.appName = 'nice'  不要这样做
       this.updateAppName()
       // this.SET_APP_NAME({name:'newAppName'})
       this.$store.commit('SET_APP_VERSION')
@@ -108,6 +122,9 @@ export default {
           ]
         }
       })
+    },
+    handleChangeStateValue(val){
+      this.SET_STATE_VALUE(val)
     }
   },
 }
