@@ -12,7 +12,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$bus)
+    // console.log(this.$bus)
   }
 }
 </script>
