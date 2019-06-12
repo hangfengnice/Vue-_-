@@ -8,7 +8,7 @@ const BASE_URL = process.env.NODE_ENV === 'production' ? '/iview-admin/' : '/'
 
 module.exports = {
   lintOnSave: false,
-  publicUrl: BASE_URL,
+  publicPath: BASE_URL,
   chainWebpack: config => {
     config.resolve.alias
     .set('@',resolve('src'))
@@ -17,7 +17,7 @@ module.exports = {
   },
   productionSourceMap: false,
   devServer: {
-    proxy: "https://localhost:4000"
+    // proxy: "http://localhost:3000"
   }
 
 }
